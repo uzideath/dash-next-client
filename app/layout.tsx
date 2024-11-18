@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/toggle-theme";
-import { ButtonDestructive } from "@/components/logout";
 import { AuthService } from "./services/Auth";
-
+import { UserSection } from "@/components/user-section";
+import PremiumButton from "@/components/premium-button";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -29,8 +29,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           disableTransitionOnChange
         >
           <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+            <PremiumButton />
             <ModeToggle />
-            {isAuthenticated && <ButtonDestructive />}
+            {isAuthenticated && <UserSection />}
           </div>
 
           <main>{children}</main>

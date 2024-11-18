@@ -14,7 +14,7 @@ export default function HomeComponent() {
     }
 
     return (
-        <div className="flex h-screen flex-col items-center justify-center bg-black text-white">
+        <div className="flex h-screen flex-col items-center justify-center">
             <h1 className="text-3xl font-bold">Welcome to Our App</h1>
             {!isAuthenticated && (
                 <Button onClick={handleDiscordLogin} className="mt-4">
