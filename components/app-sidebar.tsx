@@ -19,7 +19,7 @@ import {
     SidebarRail,
 } from "@/components/ui/sidebar"
 import { ServerSwitcher } from "./server-switcher"
-import { SearchForm } from "./search-form"
+
 import { SidebarData as data } from "../app/temp/data"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -31,7 +31,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     avatars={data.avatars}
                     defaultServer={data.versions[0]}
                 />
-                <SearchForm />
+
             </SidebarHeader>
             <SidebarContent className="gap-0">
                 {data.navMain.map((item) => (
@@ -46,22 +46,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 asChild
                                 className="group/label text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                             >
-                                <CollapsibleTrigger>
-                                    {item.title}{" "}
+                                <CollapsibleTrigger className="flex items-center gap-2">
+                                    <item.icon className="h-4 w-4" />
+                                    <span>{item.title}</span>
                                     <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                                 </CollapsibleTrigger>
+
                             </SidebarGroupLabel>
                             <CollapsibleContent>
                                 <SidebarGroupContent>
                                     <SidebarMenu>
-                                        {item.items.map((item) => (
-                                            <SidebarMenuItem key={item.title}>
-                                                <SidebarMenuButton asChild isActive={item.isActive}>
-                                                    <a href={item.url}>{item.title}</a>
+                                        {item.items.map((subItem) => (
+                                            <SidebarMenuItem key={subItem.title}>
+                                                <SidebarMenuButton
+                                                    asChild
+                                                    isActive={subItem.isActive}
+                                                    className="text-gray-500 hover:text-gray-700"
+                                                >
+                                                    <a href={subItem.url}>{subItem.title}</a>
                                                 </SidebarMenuButton>
                                             </SidebarMenuItem>
                                         ))}
                                     </SidebarMenu>
+
                                 </SidebarGroupContent>
                             </CollapsibleContent>
                         </SidebarGroup>

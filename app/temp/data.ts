@@ -1,3 +1,5 @@
+import { Book, Star, Mic, FileText } from "lucide-react";
+
 const data = {
     versions: ["Server 1", "Server 2", "Server 3"],
     avatars: {
@@ -9,134 +11,72 @@ const data = {
         {
             title: "Getting Started",
             url: "#",
+            icon: Book,
             items: [
                 {
-                    title: "Installation",
+                    title: "Overview",
                     url: "#",
                 },
                 {
-                    title: "Project Structure",
+                    title: "General information",
                     url: "#",
                 },
             ],
         },
         {
-            title: "Building Your Application",
+            title: "Leveling",
             url: "#",
+            icon: Star,
             items: [
                 {
-                    title: "Routing",
+                    title: "Text Experience",
                     url: "#",
                 },
                 {
-                    title: "Data Fetching",
+                    title: "Voice Experience",
                     url: "#",
                     isActive: true,
                 },
                 {
-                    title: "Rendering",
+                    title: "Leaderboard",
                     url: "#",
                 },
                 {
-                    title: "Caching",
+                    title: "Profile",
                     url: "#",
                 },
                 {
-                    title: "Styling",
-                    url: "#",
-                },
-                {
-                    title: "Optimizing",
-                    url: "#",
-                },
-                {
-                    title: "Configuring",
-                    url: "#",
-                },
-                {
-                    title: "Testing",
-                    url: "#",
-                },
-                {
-                    title: "Authentication",
-                    url: "#",
-                },
-                {
-                    title: "Deploying",
-                    url: "#",
-                },
-                {
-                    title: "Upgrading",
-                    url: "#",
-                },
-                {
-                    title: "Examples",
+                    title: "Rank Card",
                     url: "#",
                 },
             ],
         },
         {
-            title: "API Reference",
+            title: "Voice Channels",
             url: "#",
+            icon: Mic,
             items: [
                 {
-                    title: "Components",
+                    title: "Overview",
                     url: "#",
                 },
                 {
-                    title: "File Conventions",
-                    url: "#",
-                },
-                {
-                    title: "Functions",
-                    url: "#",
-                },
-                {
-                    title: "next.config.js Options",
-                    url: "#",
-                },
-                {
-                    title: "CLI",
-                    url: "#",
-                },
-                {
-                    title: "Edge Runtime",
+                    title: "Settings",
                     url: "#",
                 },
             ],
         },
         {
-            title: "Architecture",
+            title: "Logs",
             url: "#",
+            icon: FileText,
             items: [
                 {
-                    title: "Accessibility",
+                    title: "Overview",
                     url: "#",
                 },
                 {
-                    title: "Fast Refresh",
-                    url: "#",
-                },
-                {
-                    title: "Next.js Compiler",
-                    url: "#",
-                },
-                {
-                    title: "Supported Browsers",
-                    url: "#",
-                },
-                {
-                    title: "Turbopack",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Community",
-            url: "#",
-            items: [
-                {
-                    title: "Contribution Guide",
+                    title: "Set up",
                     url: "#",
                 },
             ],
@@ -144,4 +84,4 @@ const data = {
     ],
 };
 
-export { data as SidebarData }
+export { data as SidebarData };

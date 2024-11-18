@@ -57,12 +57,12 @@ export default function DashboardPage() {
                         <BreadcrumbList>
                             <BreadcrumbItem className="hidden md:block">
                                 <BreadcrumbLink href="#">
-                                    Building Your Application
+                                    Catto Coffee
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />
                             <BreadcrumbItem>
-                                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                                <BreadcrumbPage>Server Settings</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
