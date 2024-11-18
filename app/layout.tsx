@@ -1,8 +1,10 @@
+"use client";
+
+import React from "react";
 import "./globals.css";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/toggle-theme";
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,16 +16,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
-            <AppSidebar />
-            <header className="flex justify-end p-4">
-              <ModeToggle />
-            </header>
-            <main>
-              <SidebarTrigger />
-              {children}
-            </main>
-          </SidebarProvider>
+          <header>
+            <ModeToggle />
+          </header>
+          <main>
+            {children}
+          </main>
+
         </ThemeProvider>
       </body>
     </html>
