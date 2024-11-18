@@ -20,12 +20,18 @@ export function ServerSwitcher({
     servers,
     defaultServer,
     avatars,
+    onServerChange,
 }: {
     servers: string[];
     defaultServer: string;
-    avatars: { [key: string]: string }
+    avatars: { [key: string]: string };
+    onServerChange: (server: string) => void;
 }) {
     const [selectedServer, setSelectedServer] = React.useState(defaultServer);
+
+    React.useEffect(() => {
+        onServerChange(selectedServer);
+    }, [selectedServer, onServerChange]);
 
     return (
         <SidebarMenu>
@@ -44,8 +50,7 @@ export function ServerSwitcher({
                                     </AvatarFallback>
                                 </Avatar>
                                 <div className="flex flex-col gap-0.5 leading-none">
-                                    <span className="font-semibold">Discord Servers</span>
-                                    <span>{selectedServer}</span>
+                                    <span className="font-semibold">{selectedServer}</span>
                                 </div>
                             </div>
                             <ChevronsUpDown className="ml-auto" />
@@ -78,3 +83,4 @@ export function ServerSwitcher({
         </SidebarMenu>
     );
 }
+

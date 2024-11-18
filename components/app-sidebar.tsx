@@ -19,10 +19,16 @@ import {
     SidebarRail,
 } from "@/components/ui/sidebar"
 import { ServerSwitcher } from "./server-switcher"
-
 import { SidebarData as data } from "../app/temp/data"
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+
+export function AppSidebar({
+    setSelectedServer,
+    ...props
+}: React.ComponentProps<typeof Sidebar> & {
+    setSelectedServer: (server: string) => void;
+}) {
     return (
         <Sidebar {...props}>
             <SidebarHeader>
@@ -30,8 +36,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     servers={data.versions}
                     avatars={data.avatars}
                     defaultServer={data.versions[0]}
+                    onServerChange={setSelectedServer} // Call setSelectedServer here
                 />
-
             </SidebarHeader>
             <SidebarContent className="gap-0">
                 {data.navMain.map((item) => (
@@ -51,7 +57,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                     <span>{item.title}</span>
                                     <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                                 </CollapsibleTrigger>
-
                             </SidebarGroupLabel>
                             <CollapsibleContent>
                                 <SidebarGroupContent>
@@ -68,7 +73,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                             </SidebarMenuItem>
                                         ))}
                                     </SidebarMenu>
-
                                 </SidebarGroupContent>
                             </CollapsibleContent>
                         </SidebarGroup>

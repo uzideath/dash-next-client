@@ -22,6 +22,7 @@ import { AuthService } from "../services/Auth";
 export default function DashboardPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [selectedServer, setSelectedServer] = useState<string>(""); // State for selected server
     const router = useRouter();
 
     useEffect(() => {
@@ -48,7 +49,7 @@ export default function DashboardPage() {
 
     return (
         <SidebarProvider>
-            <AppSidebar />
+            <AppSidebar setSelectedServer={setSelectedServer} /> 
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
                     <SidebarTrigger className="-ml-1" />
@@ -62,12 +63,14 @@ export default function DashboardPage() {
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />
                             <BreadcrumbItem>
-                                <BreadcrumbPage>Server Settings</BreadcrumbPage>
+                                <BreadcrumbPage>{selectedServer || "Server Settings"}</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
                 </header>
                 <div className="flex flex-1 flex-col gap-4 p-4">
+                    {/* Display content based on selected server */}
+                    <h1>Content for: {selectedServer}</h1>
                     <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                         <div className="aspect-video rounded-xl bg-muted/50" />
                         <div className="aspect-video rounded-xl bg-muted/50" />
