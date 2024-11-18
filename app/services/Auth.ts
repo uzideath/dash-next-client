@@ -16,6 +16,20 @@ export const AuthService = {
     },
 
     loginWithDiscord() {
-        window.location.href = "http://localhost:3001/api/v1/auth/login";
+        window.location.href = `${BASE_URL}/auth/login`;
+    },
+
+    async logOut() {
+        try {
+            await axios.post(
+                `${BASE_URL}/auth/logout`,
+                {},
+                { withCredentials: true }
+            );
+
+            window.location.reload();
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
     },
 };

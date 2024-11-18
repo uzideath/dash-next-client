@@ -36,7 +36,7 @@ export default function HomePage() {
       {!isAuthenticated && (
         <button
           onClick={handleDiscordLogin}
-          className="mt-4 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          className="mt-4 rounded bg-black-600 px-4 py-2 text-white hover:bg-blue-700"
         >
           Log in with Discord
         </button>
