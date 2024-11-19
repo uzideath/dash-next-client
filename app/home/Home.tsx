@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { useAuthHandler } from "./AuthHandler";
-import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ButtonLoading } from "@/components/button-loading";
 import Loading from "@/components/loading";
+import { PrimeIcons } from "primereact/api";
 
 export default function HomeComponent() {
     const { isAuthenticated, loading, handleDiscordLogin } = useAuthHandler();
@@ -27,15 +27,22 @@ export default function HomeComponent() {
         <div className="flex h-screen flex-col items-center justify-center">
             <h1 className="text-3xl font-bold">Welcome to Our App</h1>
             {!isAuthenticated && (
-                <>
+                <div className="mt-5 flex items-center justify-center">
                     {isButtonLoading ? (
-                        <ButtonLoading />
+                        <ButtonLoading className="w-full" />
                     ) : (
-                        <Button onClick={handleLoginClick} className="mt-4">
-                            <Mail className="mr-2 h-4 w-4" /> Log in with Discord
+                        <Button
+                            onClick={handleLoginClick}
+                            className="w-full flex items-center justify-center"
+                        >
+                            <i
+                                className={`${PrimeIcons.DISCORD} mr-2`}
+                                style={{ fontSize: "1.5rem" }}
+                            />
+                            Log in with Discord
                         </Button>
                     )}
-                </>
+                </div>
             )}
         </div>
     );
