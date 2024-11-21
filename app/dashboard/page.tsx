@@ -22,7 +22,7 @@ import Loading from "@/components/loading";
 import { getMutualGuilds } from "../services/discord";
 
 export default function DashboardPage() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [_isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [selectedServer, setSelectedServer] = useState<string>("");
     const router = useRouter();
