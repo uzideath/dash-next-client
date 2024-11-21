@@ -1,11 +1,12 @@
-import * as React from "react"
-import { ChevronRight } from "lucide-react"
+import * as React from "react";
+import { useRouter } from "next/router"; // Import Next.js router
+import { ChevronRight } from "lucide-react";
 
 import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from "@/components/ui/collapsible";
 import {
     Sidebar,
     SidebarContent,
@@ -17,58 +18,114 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarRail,
-} from "@/components/ui/sidebar"
-import { ServerSwitcher } from "./server-switcher"
-import { SidebarData as data } from "../app/temp/data"
-
-
+} from "@/components/ui/sidebar";
+import { ServerSwitcher } from "./server-switcher";
+import { useFetchGuilds } from "@/hooks/useFetchGuilds";
+import Loading from "./loading";
+import { SidebarData } from "@/app/temp/data";
 
 export function AppSidebar({
     setSelectedServer,
+    router, // Accept router as a prop
     ...props
 }: React.ComponentProps<typeof Sidebar> & {
     setSelectedServer: (server: string) => void;
+    router: any; // Type for Next.js router
 }) {
+    const { guilds, loading, error } = useFetchGuilds();
+    const [selectedGuild, setSelectedGuild] = React.useState(guilds?.[0] || null);
+
+    React.useEffect(() => {
+        if (guilds?.length > 0) {
+            setSelectedGuild(guilds[0]);
+            updateURL(guilds[0].id);
+        }
+    }, [guilds]);
+
+    const handleServerChange = (guildId: string) => {
+        const guild = guilds.find((g) => g.id === guildId);
+        if (guild) {
+            setSelectedGuild(guild);
+            setSelectedServer(guild.name);
+            updateURL(guild.id);
+        }
+    };
+
+    const updateURL = (guildId: string) => {
+        router.push(`/dashboard/${guildId}`);
+    };
+
+    const handleNavigation = (guildId: string, sectionUrl: string) => {
+        router.push(`/dashboard/${guildId}${sectionUrl}`);
+    };
+
+    if (loading) {
+        return (
+            <Sidebar {...props}>
+                <SidebarHeader>
+                    <div>
+                        <Loading />
+                    </div>
+                </SidebarHeader>
+            </Sidebar>
+        );
+    }
+
+    if (error) {
+        return (
+            <Sidebar {...props}>
+                <SidebarHeader>
+                    <div>{error}</div>
+                </SidebarHeader>
+            </Sidebar>
+        );
+    }
+
+    if (!guilds || guilds.length === 0) {
+        return (
+            <Sidebar {...props}>
+                <SidebarHeader>
+                    <div>No guilds available</div>
+                </SidebarHeader>
+            </Sidebar>
+        );
+    }
+
     return (
         <Sidebar {...props}>
             <SidebarHeader>
                 <ServerSwitcher
-                    servers={data.versions}
-                    avatars={data.avatars}
-                    defaultServer={data.versions[0]}
-                    onServerChange={setSelectedServer} // Call setSelectedServer here
+                    guilds={guilds}
+                    defaultGuildId={selectedGuild?.id || ""}
+                    onServerChange={handleServerChange}
                 />
             </SidebarHeader>
             <SidebarContent className="gap-0">
-                {data.navMain.map((item) => (
-                    <Collapsible
-                        key={item.title}
-                        title={item.title}
-                        defaultOpen
-                        className="group/collapsible"
-                    >
+                {SidebarData.navMain.map((section, index) => (
+                    <Collapsible key={index} title={section.title} defaultOpen={false}>
                         <SidebarGroup>
-                            <SidebarGroupLabel
-                                asChild
-                                className="group/label text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                            >
+                            <SidebarGroupLabel>
                                 <CollapsibleTrigger className="flex items-center gap-2">
-                                    <item.icon className="h-4 w-4" />
-                                    <span>{item.title}</span>
-                                    <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                                    {section.icon && <section.icon className="w-5 h-5" />}
+                                    <ChevronRight className="ml-auto transition-transform group-data-[state=open]:rotate-90" />
+                                    <span>{section.title}</span>
                                 </CollapsibleTrigger>
                             </SidebarGroupLabel>
                             <CollapsibleContent>
                                 <SidebarGroupContent>
                                     <SidebarMenu>
-                                        {item.items.map((subItem) => (
-                                            <SidebarMenuItem key={subItem.title}>
+                                        {section.items.map((item, idx) => (
+                                            <SidebarMenuItem key={idx}>
                                                 <SidebarMenuButton
                                                     asChild
-                                                    isActive={subItem.isActive}
-                                                    className="text-gray-500 hover:text-gray-700"
+                                                    onClick={() =>
+                                                        handleNavigation(
+                                                            selectedGuild?.id || "",
+                                                            item.url
+                                                        )
+                                                    }
                                                 >
-                                                    <a href={subItem.url}>{subItem.title}</a>
+                                                    <a href="#">{item.title}</a>
                                                 </SidebarMenuButton>
                                             </SidebarMenuItem>
                                         ))}

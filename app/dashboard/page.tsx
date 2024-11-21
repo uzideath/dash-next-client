@@ -18,8 +18,8 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AuthService } from "../services/Auth";
-import { Audio, InfinitySpin } from 'react-loader-spinner'
 import Loading from "@/components/loading";
+import { getMutualGuilds } from "../services/discord";
 
 export default function DashboardPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -37,17 +37,22 @@ export default function DashboardPage() {
                 setLoading(false);
             }
         };
-
+        getMutualGuilds();
         checkAuthentication();
     }, [router]);
 
     if (loading) {
-        return <Loading />
+        return <Loading />;
     }
+
+    const handleServerChange = (serverName: string) => {
+        setSelectedServer(serverName);
+        router.push(`/dashboard/${serverName}`);
+    };
 
     return (
         <SidebarProvider>
-            <AppSidebar setSelectedServer={setSelectedServer} />
+            <AppSidebar setSelectedServer={handleServerChange} router={router} />
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
                     <SidebarTrigger className="-ml-1" />
@@ -61,7 +66,9 @@ export default function DashboardPage() {
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />
                             <BreadcrumbItem>
-                                <BreadcrumbPage>{selectedServer || "Server Settings"}</BreadcrumbPage>
+                                <BreadcrumbPage>
+                                    {selectedServer || "Server Settings"}
+                                </BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
